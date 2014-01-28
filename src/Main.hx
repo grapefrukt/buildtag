@@ -15,6 +15,7 @@ import sys.io.Process;
 	?isGit:Bool,
 	?isDirty:Bool,
 	?gitVersion:String,
+	?gitBranch:String,
  }
 
 class Main {
@@ -35,7 +36,7 @@ class Main {
 			echo("    version: " + lib.version);
 			if (lib.version == "dev") {
 				echo("    path:    " + lib.path);
-				echo("    git:     " + lib.gitVersion + (lib.isDirty ? " (DIRTY)" : ""));
+				echo("    git:     " + lib.gitBranch + " " + lib.gitVersion + (lib.isDirty ? " (DIRTY)" : ""));
 			}
 			echo("");
 		}
@@ -51,10 +52,14 @@ class Main {
 				// check if it's a git repo
 				lib.isGit = getOutput("git", ["rev-parse",  "--is-inside-work-tree"])[0] == "true";
 				
-				// if it's a git repo, we check if it's dirty
 				if (lib.isGit) {
+					// if it's a git repo, we check if it's dirty
 					lib.isDirty = getOutput("git", ["status", "--porcelain"])[0] != "";
-					// and finally, we get the git version string
+
+					// get the current branch (not really needed since we have the version string, but still nice)
+					lib.gitBranch = getOutput("git", ["rev-parse", "--abbrev-ref", "HEAD"])[0];
+					
+					// get the git version string
 					lib.gitVersion = getOutput("git", ["rev-parse", "HEAD"])[0];
 				}
 			}
