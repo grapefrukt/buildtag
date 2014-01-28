@@ -1,0 +1,11 @@
+{
+  "name": "buildtag",
+  "url": "http://github.com/grapefrukt/buildtag",
+  "license": "MIT",
+  "tags": [ "neko" ],
+  "description": "buildtag gets and outputs the versions of all haxelibs you have installed",
+  "version": "0.0.1",
+  "releasenote": "First release",
+  "contributors": [ "grapefrukt" ],
+  "dependencies": {}
+}
